@@ -34,7 +34,8 @@ lazy val ziohttpcross = crossProject(JSPlatform, JVMPlatform).crossType(CrossTyp
       Dependencies.zioHttp, 
       Dependencies.zioTest,
       Dependencies.zioTestSBT, 
-      Dependencies.zioTestMagnolia
+      Dependencies.zioTestMagnolia,
+      Dependencies.dataimportcsv3s
   
     )
 
@@ -42,7 +43,22 @@ lazy val ziohttpcross = crossProject(JSPlatform, JVMPlatform).crossType(CrossTyp
   ).
   jsSettings(
     // Add JS-specific settings here
-    libraryDependencies ++= Dependencies.sttp.value,
-    scalaJSUseMainModuleInitializer := true,
+    libraryDependencies ++= Dependencies.jsclientlibraries.value,
+
+
+    scalaJSUseMainModuleInitializer := true
     
   )
+
+
+
+lazy val app = (project in file("app"))
+  .settings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    semanticdbEnabled               := true,
+    autoAPIMappings                 := true,
+    scalaJSUseMainModuleInitializer := true,
+    Compile / mainClass             := Some("org.aurora.app.MainApp")
+  )
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(ziohttpcross.js)

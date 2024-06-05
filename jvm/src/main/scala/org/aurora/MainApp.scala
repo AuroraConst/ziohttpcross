@@ -5,11 +5,9 @@ import zio.http._
 import zio.http.endpoint._
 object MainApp extends ZIOAppDefault {
 
-  // def makeWebApp:App[Any] =
-  //   Http.collect[Request] {
-  //     case Method.GET -> !! =>   handler(Response.text("Greetings at your service"))
-
-  //   }
+  def importedPatients =
+    import org.aurora._, dataimport._
+    importpatients
 
   val routes =
     Routes(
@@ -17,6 +15,8 @@ object MainApp extends ZIOAppDefault {
       Method.GET / "greet" -> handler { (req: Request) =>
         val name = req.queryParamToOrElse("name", "World")
         Response.text(s"Hello $name!")
+      },
+      Method.GET / "patients"   -> handler {Response.text(s"$importedPatients")
       }
     )
   override val run = {
