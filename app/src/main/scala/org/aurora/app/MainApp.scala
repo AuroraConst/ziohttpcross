@@ -1,11 +1,11 @@
 package org.aurora.app
 
-import org.raquo.laminar.api.L.{*,given}
+import com.raquo.laminar.api.L.{*,given}
 import org.scalajs.dom
 
 object MainApp {
   def main(args:Array[String]):Unit = {
-    val containerNode  = dom.document.queryselector("#app") //# refers to the ID name of the html element
+    val containerNode  = dom.document.querySelector("#app") //# refers to the ID name of the html element
 
     render(
         containerNode,
@@ -19,7 +19,15 @@ object Tutorial:
   val staticContent =
     div (
       // modifiers
-      styleAttr := "color: red",
+      styleAttr := "color: blue",
       p("Hello world!"),
-      p("Hello Beans 🫘")
+      p("Hello Beans 🫘🫘🫘🫘🫘🫘"),
+      p("Hello world!"),
+      p("Hello Beans 🫘🫘🫘🫘🫘"),
+      p("Hello world!"),
+      p("Hello Beans 🫘🫘🫘🫘"),
+      p("Hello world!"),
+      p("Hello Beans 🫘🫘🫘")
+
+
     )

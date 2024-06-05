@@ -1,13 +1,20 @@
-// give the user a nice default project!
-val sharedSettings = Seq(
-  scalaVersion := DependencyVersions.scalaVersion,
-  organization := "org.aurora",
-  scalacOptions ++=  Seq("-Yretain-trees") //necessary in zio-json if any case classes have default parameters
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+ThisBuild / organization := "org.aurora"
+ThisBuild / scalaVersion := DependencyVersions.scalaVersion
+
+ThisBuild / scalacOptions ++= Seq(
+  "-unchecked",
+  "-deprecation",
+  "-feature",
+  "-Yretain-trees" //necessary in zio-json if any case classes have default parameters
 )
+
+
+
 
 lazy val root = project.in(file(".")).
   aggregate(ziohttpcross.js, ziohttpcross.jvm).
-  settings(sharedSettings, 
+  settings(
     publish := {},
     publishLocal := {}
 
@@ -17,7 +24,6 @@ lazy val ziohttpcross = crossProject(JSPlatform, JVMPlatform).crossType(CrossTyp
   .settings(
     name := "ziohttpcross",
     version := "0.1-SNAPSHOT",
-    sharedSettings,
     libraryDependencies ++= Dependencies.zioJson.value,
     libraryDependencies ++= Dependencies.scalatest.value
 
@@ -46,7 +52,7 @@ lazy val ziohttpcross = crossProject(JSPlatform, JVMPlatform).crossType(CrossTyp
     libraryDependencies ++= Dependencies.jsclientlibraries.value,
 
 
-    scalaJSUseMainModuleInitializer := true
+    // scalaJSUseMainModuleInitializer := true
     
   )
 
@@ -58,7 +64,8 @@ lazy val app = (project in file("app"))
     semanticdbEnabled               := true,
     autoAPIMappings                 := true,
     scalaJSUseMainModuleInitializer := true,
-    Compile / mainClass             := Some("org.aurora.app.MainApp")
+    libraryDependencies ++= Dependencies.jsclientlibraries.value,
+    Compile / mainClass             := Some(("org.aurora.app.MainApp"))
   )
   .enablePlugins(ScalaJSPlugin)
   .dependsOn(ziohttpcross.js)

@@ -25,3 +25,4 @@ build/
 .settingsz
 .DS_Store
 null
+app/.parcel-cache/data.mdb
