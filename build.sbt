@@ -30,7 +30,7 @@ lazy val ziohttpcross = crossProject(JSPlatform, JVMPlatform).crossType(CrossTyp
   ).
   jvmSettings(
     // Add JVM-specific settings here
-    ThisBuild / fork              := true,   
+    ThisBuild / fork              := false,   //of rourse javascripts cannot fork as they are single threaded
     ThisBuild / semanticdbEnabled := true,
     ThisBuild / semanticdbVersion := scalafixSemanticdb.revision,
     ThisBuild / scalafixDependencies ++= List("com.github.liancheng" %% "organize-imports" % "0.6.0"),
