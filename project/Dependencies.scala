@@ -5,7 +5,7 @@ object Dependencies {
   val zioVersion = "2.1.1"
   val zioJsonVersion = "0.6.2"
   val zioHttpVersion = "3.0.0-RC8"
-  val dataimportcsv3sVersion = "0.1-SNAPSHOT"
+  val dataimportcsv3sVersion = "0.0.1-SNAPSHOT"
   val frontrouteVersion = "0.19.0"
   val tapirVersion      = "1.2.6"
   val sttpVersion       = "3.8.8"
@@ -17,7 +17,7 @@ object Dependencies {
   val zioTestMagnolia = "dev.zio" %% "zio-test-magnolia" % zioVersion % Test  
 
 
-  val dataimportcsv3s = "org.aurora"%%"dataimportcsv3s" % dataimportcsv3sVersion
+  val dataimportcsv3s = "org.aurora" %% "dataimportcsv3s" % dataimportcsv3sVersion
 
 
   val scalajsdom  = Def.setting {
@@ -38,6 +38,7 @@ object Dependencies {
 
   val jsclientlibraries: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
+      "org.aurora" %%% "dataimportcsv3s" % dataimportcsv3sVersion,
       "io.frontroute" %%% "frontroute" % frontrouteVersion,
       "com.raquo" %%% "laminar" % DependencyVersions.laminar,
       "com.softwaremill.sttp.tapir"   %%% "tapir-sttp-client" % tapirVersion,

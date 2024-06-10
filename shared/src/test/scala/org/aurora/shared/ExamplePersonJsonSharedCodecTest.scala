@@ -4,10 +4,10 @@ import org.scalatest._
 import wordspec._
 import matchers._
 
-class FirstTestShared extends AnyWordSpec with should.Matchers:
+class ExamplePersonJsonSharedCodecTest extends AnyWordSpec with should.Matchers:
 
   import zio.json.*
-  import org.aurora.shared.given
+  import org.aurora.shared._, example.{Person, given }
 
   val person = Person("Arnold",50) 
 

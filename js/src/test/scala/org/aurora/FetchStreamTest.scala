@@ -8,18 +8,20 @@ import com.raquo.airstream.ownership.OneTimeOwner
 class FetchStreamTest extends AnyWordSpec :
   "this" should {
     "work" in {
-      val  resultString = Var[String]("")
       val result = FetchStream.get("http://localhost:8080/patientsjson")
       val subscription = result.addObserver( new Observer[String] {
-        override def onError(err: Throwable): Unit = ()
+        override def onError(err: Throwable): Unit = info(fail(err.getMessage()))
         override def onTry(nextValue: Try[String]): Unit = ()
         override def onNext(nextValue: String):Unit =
-          info(nextValue)
+          import org.aurora.shared._, dto._
+          import zio.json._
+          nextValue.fromJson[List[Patient]].foreach( p => info(s"$p"))
+          // info(nextValue)
       })(new OneTimeOwner(() => ()))
 
 
       //wait 1 second and then kill the owner.  wait for FetchStream to process
-      scala.scalajs.js.timers.setTimeout(1000) {
+      scala.scalajs.js.timers.setTimeout(3000) {
         subscription.kill() 
       }
 
