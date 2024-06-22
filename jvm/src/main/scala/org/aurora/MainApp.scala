@@ -38,7 +38,7 @@ object MainApp extends ZIOAppDefault :
       }
     )  @@ cors(config) //cors configuration
 
-  val staticroutes =  Routes.empty @@ Middleware.serveResources(Path.empty / "static") 
+  val staticroutes =  Routes.empty @@ Middleware.serveResources(Path.empty / "static") //accesses resources within directories and subdirectories
   override val run = {
     Console.printLine("please visit http://localhost:8080") 
     Server.serve(routes++staticroutes).provide(Server.default)
