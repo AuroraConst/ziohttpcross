@@ -7,7 +7,6 @@ object Dependencies {
   val zioHttpVersion = "3.0.0-RC8"
   val dataimportcsv3sVersion = "0.0.1-SNAPSHOT"
   val frontrouteVersion = "0.19.0"
-  val tapirVersion      = "1.2.6"
 
   val zioHttp     = "dev.zio" %% "zio-http"     % zioHttpVersion
   val zioTest     = "dev.zio" %% "zio-test"     % zioVersion % Test
