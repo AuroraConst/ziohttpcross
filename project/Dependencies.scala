@@ -8,7 +8,6 @@ object Dependencies {
   val dataimportcsv3sVersion = "0.0.1-SNAPSHOT"
   val frontrouteVersion = "0.19.0"
   val tapirVersion      = "1.2.6"
-  val sttpVersion       = "3.8.8"
 
   val zioHttp     = "dev.zio" %% "zio-http"     % zioHttpVersion
   val zioTest     = "dev.zio" %% "zio-test"     % zioVersion % Test
@@ -41,9 +40,6 @@ object Dependencies {
       "org.aurora" %%% "dataimportcsv3s" % dataimportcsv3sVersion,
       "io.frontroute" %%% "frontroute" % frontrouteVersion,
       "com.raquo" %%% "laminar" % DependencyVersions.laminar,
-      "com.softwaremill.sttp.tapir"   %%% "tapir-sttp-client" % tapirVersion,
-      "com.softwaremill.sttp.tapir"   %%% "tapir-json-zio"    % tapirVersion,
-      "com.softwaremill.sttp.client3" %%% "zio"               % sttpVersion,
       "dev.zio"                       %%% "zio-json"          % "0.4.2",
 
     )
