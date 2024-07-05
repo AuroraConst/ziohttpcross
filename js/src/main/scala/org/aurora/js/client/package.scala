@@ -5,7 +5,7 @@ package object client :
   import com.raquo.airstream.ownership.OneTimeOwner
 
   import zio.json._
-  import org.aurora.shared._, dto._
+  import org.aurora.model.shared._, dto._
 
 
   def patients = 

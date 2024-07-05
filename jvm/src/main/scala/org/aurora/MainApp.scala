@@ -7,7 +7,7 @@ import zio.http.Middleware.{CorsConfig, cors}
 import zio.http.Header.{AccessControlAllowOrigin, Origin}
 object MainApp extends ZIOAppDefault :
 
-  import org.aurora._, dataimport._
+  import org.aurora._, dataimport.dataimportapi._
   //TODO MAYBE NOT NEEDED
   val config: CorsConfig =
   CorsConfig(
@@ -32,7 +32,7 @@ object MainApp extends ZIOAppDefault :
       },
       Method.GET / "patientsjson"   -> handler {
         import org.aurora._, dataimport._
-        import org.aurora.shared._, dto._
+        import org.aurora.model.shared._, dto._
         import zio.json._
         Response.text(s"${importpatients.toJson}")
       }
