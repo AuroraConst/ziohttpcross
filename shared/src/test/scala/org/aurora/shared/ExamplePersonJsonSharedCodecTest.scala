@@ -1,4 +1,4 @@
-package org.aurora.shared
+package com.axiom.shared
 
 import org.scalatest._
 import wordspec._
@@ -7,7 +7,7 @@ import matchers._
 class ExamplePersonJsonSharedCodecTest extends AnyWordSpec with should.Matchers:
 
   import zio.json.*
-  import org.aurora.shared._, example.{Person, given }
+  import com.axiom.shared._, example.{Person, given }
 
   val person = Person("Arnold",50) 
 

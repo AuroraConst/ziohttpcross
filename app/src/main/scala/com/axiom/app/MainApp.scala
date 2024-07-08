@@ -1,4 +1,4 @@
-package org.aurora.app
+package com.axiom.app
 
 import com.raquo.laminar.api.L.{*,given}
 import org.scalajs.dom

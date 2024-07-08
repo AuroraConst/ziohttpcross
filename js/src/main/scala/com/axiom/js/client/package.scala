@@ -1,11 +1,11 @@
-package org.aurora.js
+package com.axiom.js
 
 package object client :
   import com.raquo.laminar.api.L.{*, given}
   import com.raquo.airstream.ownership.OneTimeOwner
 
   import zio.json._
-  import org.aurora.model.shared._, dto._
+  import com.axiom.model.shared._, dto._
 
 
   def patients = 

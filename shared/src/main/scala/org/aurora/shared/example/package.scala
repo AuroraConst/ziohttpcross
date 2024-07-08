@@ -1,4 +1,4 @@
-package org.aurora.shared
+package com.axiom.shared
 
 package object example :
   import zio.json._
