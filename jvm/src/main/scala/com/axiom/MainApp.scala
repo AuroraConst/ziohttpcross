@@ -7,7 +7,7 @@ import zio.http.Middleware.{CorsConfig, cors}
 import zio.http.Header.{AccessControlAllowOrigin, Origin}
 object MainApp extends ZIOAppDefault :
 
-  import com.axiom._, dataimport.dataimportapi._
+  import com.axiom._, dataimport.api._
   //TODO MAYBE NOT NEEDED
   val config: CorsConfig =
   CorsConfig(
