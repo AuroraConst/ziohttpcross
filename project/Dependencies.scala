@@ -15,7 +15,7 @@ object Dependencies {
   val zioTestMagnolia = "dev.zio" %% "zio-test-magnolia" % zioVersion % Test  
 
 
-  val dataimportcsv3s = "org.aurora" %% "dataimportcsv3s" % dataimportcsv3sVersion
+  val dataimportcsv3s = "com.axiom" %% "dataimportcsv3s" % dataimportcsv3sVersion
 
 
   val scalajsdom  = Def.setting {
@@ -36,7 +36,7 @@ object Dependencies {
 
   val jsclientlibraries: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
-      "org.aurora" %%% "dataimportcsv3s" % dataimportcsv3sVersion,
+      "com.axiom" %%% "dataimportcsv3s" % dataimportcsv3sVersion,
       "io.frontroute" %%% "frontroute" % frontrouteVersion,
       "com.raquo" %%% "laminar" % DependencyVersions.laminar,
       "dev.zio"                       %%% "zio-json"          % "0.4.2",
