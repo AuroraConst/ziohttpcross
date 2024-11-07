@@ -29,8 +29,10 @@ object MainApp extends ZIOAppDefault :
         },
       Method.GET / "patients"   -> handler {
         import com.axiom._, dataimport._
+        import zio.json._
         Response.text(s"${importpatients.toJson}")
       },
+      
       Method.GET / "patientsjson"   -> handler {
         import com.axiom._, dataimport._
         import com.axiom.model.shared._, dto._
