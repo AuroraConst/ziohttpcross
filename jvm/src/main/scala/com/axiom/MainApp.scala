@@ -13,8 +13,11 @@ object MainApp extends ZIOAppDefault :
   val config: CorsConfig =
   CorsConfig(
     allowedOrigin = {  //allows origin from vite server to access routes on server
-      case origin if validSites.filter(_ == origin).size > 0 =>
+      // case origin if validSites.filter(_ == origin).size > 0 =>
+      //   Some(AccessControlAllowOrigin.Specific(origin)) 
+      case origin if validSites.filter(_ == origin).size >= 0 =>  //because it allows size = 0, it allows everything
         Some(AccessControlAllowOrigin.Specific(origin)) 
+
       case _  => None
     },
   )
