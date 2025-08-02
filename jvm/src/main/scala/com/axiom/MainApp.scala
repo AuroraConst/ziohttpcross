@@ -12,7 +12,7 @@ import os.*
 import zio.stream.ZStream
 object MainApp extends ZIOAppDefault :
 
-  import com.axiom._, dataimport.api._
+  
   //TODO MAYBE NOT NEEDED
   val validSites = List("http://localhost:5173", "http://localhost:8080", "vscode-webview://03js7hav97p76rvju1vgp6e739m8h196h6ic3dcg5268kb1h5e8e").map(Origin.parse(_).toOption.get)
   val config: CorsConfig =
@@ -36,17 +36,17 @@ object MainApp extends ZIOAppDefault :
         val name = req.queryParamToOrElse("name", "World")
         Response.text(s"Hello $name!")
         },
-      Method.GET / "patients"   -> handler {Patients.patients},
+      Method.GET / "patients"   -> handler {PatientsHandlers.patients},
       
-      Method.GET / "patientsjson"   -> handler {Patients.patients},
+      Method.GET / "patientsjson"   -> handler {PatientsHandlers.patients},
       // Simple Server-Sent Events endpoint
-      Method.GET / "events" -> handler { eventstream.events},
+      Method.GET / "events" -> handler { handlers.eventstreamhandlers.events},
       // SSE with real-time data (example: system time)
-      Method.GET / "time-events" -> handler {eventstream.timeevents},
+      Method.GET / "time-events" -> handler {handlers.eventstreamhandlers.timeevents},
 
       //directory browsing
-      Method.GET / "dev" / "browse" -> handler { directorybrowser.root},
-      Method.GET / "dev" / "browse" / string("subpath") -> handler { directorybrowser.browse } 
+      Method.GET / "dev" / "browse" -> handler { directorybrowserhandlers.root},
+      Method.GET / "dev" / "browse" / string("subpath") -> handler { directorybrowserhandlers.browse } 
     
     )  @@ cors(config) //cors configuration. 
 

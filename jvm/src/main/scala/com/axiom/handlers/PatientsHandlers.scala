@@ -8,6 +8,6 @@ import zio.json._
 import zio.http._
 import zio.http.endpoint._
 
-object Patients :
+object PatientsHandlers :
   def patients(req:Request) = 
     Response.text(s"${importpatients.toJson}")

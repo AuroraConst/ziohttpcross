@@ -2,7 +2,7 @@ package com.axiom
 import os.*
 import zio.http._
 
-object directorybrowser {
+object directorybrowserhandlers {
     def root = (req: Request) =>
         val devPath = os.root / "dev"
         if (os.exists(devPath) && os.isDir(devPath)) {
