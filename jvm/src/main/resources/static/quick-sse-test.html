@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quick SSE Test</title>
+</head>
+<body>
+    <h1>SSE Test</h1>
+    <div id="events"></div>
+    
+    <script>
+        const eventSource = new EventSource('/events');
+        const eventsDiv = document.getElementById('events');
+        
+        eventSource.onmessage = function(event) {
+            const div = document.createElement('div');
+            div.textContent = `${new Date().toLocaleTimeString()}: ${event.data}`;
+            eventsDiv.appendChild(div);
+        };
+        
+        eventSource.onerror = function(event) {
+            console.error('SSE error:', event);
+        };
+    </script>
+</body>
+</html>

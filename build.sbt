@@ -9,6 +9,10 @@ ThisBuild / scalacOptions ++= Seq(
   "-Yretain-trees" //necessary in zio-json if any case classes have default parameters
 )
 
+// Simple command alias to start the ZIO http server
+addCommandAlias("dev", "project ziohttpcrossJVM; ~reStart")
+addCommandAlias("devServer", "project ziohttpcrossJVM; ~reStart")
+
 
 
 
@@ -17,7 +21,6 @@ lazy val root = project.in(file(".")).
   settings(
     publish := {},
     publishLocal := {}
-
   )
 
 lazy val ziohttpcross = crossProject(JSPlatform, JVMPlatform).crossType(CrossType.Full).in(file("."))
@@ -35,13 +38,16 @@ lazy val ziohttpcross = crossProject(JSPlatform, JVMPlatform).crossType(CrossTyp
     ThisBuild / semanticdbVersion := scalafixSemanticdb.revision,
     ThisBuild / scalafixDependencies ++= List("com.github.liancheng" %% "organize-imports" % "0.6.0"),
 
+    // Set working directory to app folder
+    Compile / run / baseDirectory := (ThisBuild / baseDirectory).value / "app",
 
     libraryDependencies ++= Seq(
       Dependencies.zioHttp, 
       Dependencies.zioTest,
       Dependencies.zioTestSBT, 
       Dependencies.zioTestMagnolia,
-      Dependencies.dataimportcsv3s
+      Dependencies.dataimportcsv3s,
+      Dependencies.toolkit
   
     )
 

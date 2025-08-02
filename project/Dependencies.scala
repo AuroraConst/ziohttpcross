@@ -7,6 +7,7 @@ object Dependencies {
   val zioHttpVersion = "3.0.0-RC8"
   val dataimportcsv3sVersion = "0.0.1-SNAPSHOT"
   val frontrouteVersion = "0.19.0"
+  val toolkitVersion = "0.7.0"
 
   val zioHttp     = "dev.zio" %% "zio-http"     % zioHttpVersion
   val zioTest     = "dev.zio" %% "zio-test"     % zioVersion % Test
@@ -16,11 +17,13 @@ object Dependencies {
 
 
   val dataimportcsv3s = "com.axiom" %% "dataimportcsv3s" % dataimportcsv3sVersion
+  val toolkit = "org.scala-lang" %% "toolkit" % toolkitVersion
 
 
   val scalajsdom  = Def.setting {
     Seq("org.scala-js" %%% "scalajs-dom" % "2.4.0")
   }
+
 
   val zioJson = Def.setting {
     Seq("dev.zio" %%% "zio-json" % zioJsonVersion)

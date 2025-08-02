@@ -5,6 +5,11 @@ import zio.http._
 import zio.http.endpoint._
 import zio.http.Middleware.{CorsConfig, cors}
 import zio.http.Header.{AccessControlAllowOrigin, Origin}
+import zio.schema.codec.JsonCodec.zioJsonBinaryCodec
+// import zio.schema.codec.JsonCodec.schemaBasedBinaryCodec                                                                                                                              
+// import zio.schema.codec.JsonCodec.zioJsonBinaryCodec                                                                                                                                  
+import os.*
+import zio.stream.ZStream
 object MainApp extends ZIOAppDefault :
 
   import com.axiom._, dataimport.api._
@@ -25,26 +30,28 @@ object MainApp extends ZIOAppDefault :
 
   val routes =
     Routes(
-      Method.GET / Root -> handler(Response.text("Greetings at your service!!! Arnoldorferdorf!!!xxxxx")),
+      Method.GET / Root -> handler(Response.text("Greetings at your service!!! Arnoldorferdorf!!!xxxxx" +
+        "http://localhost:8080/assets/static/sse-test.html")),
       Method.GET / "greet" -> handler { (req: Request) =>
         val name = req.queryParamToOrElse("name", "World")
         Response.text(s"Hello $name!")
         },
-      Method.GET / "patients"   -> handler {
-        import com.axiom._, dataimport._
-        import zio.json._
-        Response.text(s"${importpatients.toJson}")
-      },
+      Method.GET / "patients"   -> handler {Patients.patients},
       
-      Method.GET / "patientsjson"   -> handler {
-        import com.axiom._, dataimport._
-        import com.axiom.model.shared._, dto._
-        import zio.json._
-        Response.text(s"${importpatients.toJson}")
-      }
+      Method.GET / "patientsjson"   -> handler {Patients.patients},
+      // Simple Server-Sent Events endpoint
+      Method.GET / "events" -> handler { eventstream.events},
+      // SSE with real-time data (example: system time)
+      Method.GET / "time-events" -> handler {eventstream.timeevents},
+
+      //directory browsing
+      Method.GET / "dev" / "browse" -> handler { directorybrowser.root},
+      Method.GET / "dev" / "browse" / string("subpath") -> handler { directorybrowser.browse } 
+    
     )  @@ cors(config) //cors configuration. 
 
-  val staticroutes =  Routes.empty @@ Middleware.serveResources(Path.empty / "static") //accesses resources within directories and subdirectories
+  
+  val staticroutes =  Routes.empty @@ Middleware.serveResources(zio.http.Path.empty / "assets") //accesses resources within directories and subdirectories
   override val run = {
     Console.printLine("please visit http://localhost:8080")  
     Server.serve(routes++staticroutes).provide(Server.default)
