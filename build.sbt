@@ -6,7 +6,8 @@ ThisBuild / scalacOptions ++= Seq(
   "-unchecked",
   "-deprecation",
   "-feature",
-  "-Yretain-trees" //necessary in zio-json if any case classes have default parameters
+  "-Yretain-trees",
+  "-Wunused:all" //necessary in zio-json if any case classes have default parameters
 )
 
 // Simple command alias to start the ZIO http server
