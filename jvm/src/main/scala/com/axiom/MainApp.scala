@@ -56,7 +56,7 @@ object MainApp extends ZIOAppDefault :
     */
   val staticroutes =  Routes.empty @@ Middleware.serveResources(zio.http.Path.empty / "assets") //accesses resources within directories and subdirectories
   override val run = {
-    Console.printLine("please visit http://localhost:8080")  
-    Server.serve(routes++staticroutes).provide(Server.default)
+    Console.printLine("please visit http://localhost:8083")  
+    Server.serve(routes++staticroutes).provide(Server.defaultWithPort(8083))
 }
 
