@@ -47,7 +47,7 @@ lazy val ziohttpcross = crossProject(JSPlatform, JVMPlatform).crossType(CrossTyp
       Dependencies.zioTest,
       Dependencies.zioTestSBT, 
       Dependencies.zioTestMagnolia,
-      Dependencies.dataimportcsv3s,
+      Dependencies.nlites_dataimportcsv3s,
       Dependencies.toolkit
   
     )

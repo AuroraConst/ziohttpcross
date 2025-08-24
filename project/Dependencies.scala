@@ -5,7 +5,7 @@ object Dependencies {
   val zioVersion = "2.1.1"
   val zioJsonVersion = "0.6.2"
   val zioHttpVersion = "3.0.0-RC8"
-  val dataimportcsv3sVersion = "0.0.1-SNAPSHOT"
+  val nlites_dataimportcsv3sVersion = "0.0.1-SNAPSHOT"
   val frontrouteVersion = "0.19.0"
   val toolkitVersion = "0.7.0"
 
@@ -16,7 +16,7 @@ object Dependencies {
   val zioTestMagnolia = "dev.zio" %% "zio-test-magnolia" % zioVersion % Test  
 
 
-  val dataimportcsv3s = "com.axiom" %% "dataimportcsv3s" % dataimportcsv3sVersion
+  val nlites_dataimportcsv3s = "com.axiom" %% "nlites_dataimportcsv3s" % nlites_dataimportcsv3sVersion
   val toolkit = "org.scala-lang" %% "toolkit" % toolkitVersion
 
 
@@ -39,7 +39,7 @@ object Dependencies {
 
   val jsclientlibraries: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
-      "com.axiom" %%% "dataimportcsv3s" % dataimportcsv3sVersion,
+      nlites_dataimportcsv3s,
       "io.frontroute" %%% "frontroute" % frontrouteVersion,
       "com.raquo" %%% "laminar" % DependencyVersions.laminar,
       "dev.zio"                       %%% "zio-json"          % "0.4.2",
