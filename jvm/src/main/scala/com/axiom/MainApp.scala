@@ -59,16 +59,19 @@ object MainApp extends ZIOAppDefault :
       // .outStream[Byte](Status.Ok)
       // .outError[ApiProblem](Status.InternalServerError)
 
-      val downloadHandler: String => ZIO[FileService, ApiProblem, ZStream[Any, Throwable, Byte]] =
-        (fileName: String) => 
-          for {
-            file <- FileService.getFile(fileName)
-          } yield ZStream.fromFile(file).orDie
-
-val route: Routes[FileService, ApiProblem, None] = downloadEndpoint.implement(downloadHandler)
             
     
     )  @@ cors(config) //cors configuration. 
+
+    //TODO FINISHIN CONNECTING HANDLER TO ENDPOINT
+    // val downloadHandler: String => ZIO[FileService, ApiProblem, ZStream[Any, Throwable, Byte]] =
+    // (fileName: String) => 
+    //   for {
+    //     file <- FileService.getFile(fileName)
+    //   } yield ZStream.fromFile(file).orDie
+
+    // val route: Routes[FileService, ApiProblem, None] = downloadEndpoint.implement(downloadHandler)
+
 
   
   /**
