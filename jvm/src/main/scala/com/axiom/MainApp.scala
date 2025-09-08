@@ -48,7 +48,24 @@ object MainApp extends ZIOAppDefault :
       Method.GET / "dev" / "browse" -> handler { directorybrowserhandlers.root},
       Method.GET / "dev" / "browse" / string("subpath") -> handler { directorybrowserhandlers.browse } ,
 
-      Method.GET / "download" -> handler { (req: Request) => Response.text( "downloading!!!")}
+      Method.GET / "download" -> handler { (req: Request) => Response.text( "downloading!!!")} ,
+
+      Method.GET / "download" / string("file") -> handler { (file: String, req: Request) => Response.text( s"downloading $file!!!")} , 
+
+
+
+      // private val downloadEndpoint: Endpoint[String, ApiProblem, ZStream[Any, Throwable, Byte], None] = Endpoint
+      // .get("download" / string("file"))
+      // .outStream[Byte](Status.Ok)
+      // .outError[ApiProblem](Status.InternalServerError)
+
+      val downloadHandler: String => ZIO[FileService, ApiProblem, ZStream[Any, Throwable, Byte]] =
+        (fileName: String) => 
+          for {
+            file <- FileService.getFile(fileName)
+          } yield ZStream.fromFile(file).orDie
+
+val route: Routes[FileService, ApiProblem, None] = downloadEndpoint.implement(downloadHandler)
             
     
     )  @@ cors(config) //cors configuration. 
