@@ -4,7 +4,7 @@ import zio.http._
 
 object directorybrowserhandlers {
     def root = (req: Request) =>
-        val devPath = os.root / "dev"
+        val devPath = os.root / "home" / "docere"
         if (os.exists(devPath) && os.isDir(devPath)) {
           val files = os.list(devPath).map(_.last).mkString("<br>")
           val htmlContent = s""" 
