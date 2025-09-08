@@ -30,7 +30,7 @@ object MainApp extends ZIOAppDefault :
 
   val routes =
     Routes(
-      Method.GET / Root -> handler(Response.text("Greetings at your service!!! Arnoldorferdorf!!!xxxxx" +
+      Method.GET / Root -> handler(Response.text("Greetings !!! " +
         "http://localhost:8080/assets/static/sse-test.html")),
       Method.GET / "greet" -> handler { (req: Request) =>
         val name = req.queryParamToOrElse("name", "World")
