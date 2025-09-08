@@ -47,22 +47,9 @@ object MainApp extends ZIOAppDefault :
       //directory browsing
       Method.GET / "dev" / "browse" -> handler { directorybrowserhandlers.root},
       Method.GET / "dev" / "browse" / string("subpath") -> handler { directorybrowserhandlers.browse } ,
-      Method.GET / "download" / string("filename") -> handler { (filename: String) => 
-        val filePath = os.root / "home" / "docere" / filename
-        if (os.exists(filePath) && os.isFile(filePath)) {
-          val fileBytes = os.read.bytes(filePath)
-          Response(
-            status = Status.Ok,
-            headers = Headers(
-              Header.ContentType(MediaType.application.`octet-stream`),
-              Header.ContentDisposition.Attachment(filename)
-            ),
-            body = Body.fromChunk(Chunk.fromArray(fileBytes))
-          )
-        } else {
-          Response.status(Status.NotFound).withBody(Body.fromString("File not found"))
-        }
-      }
+
+      Method.GET / "download" -> handler { (req: Request) => Response.text( "downloading!!!")}
+            
     
     )  @@ cors(config) //cors configuration. 
 
