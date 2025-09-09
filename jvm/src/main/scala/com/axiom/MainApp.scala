@@ -5,11 +5,6 @@ import zio.http._
 import zio.http.endpoint._
 import zio.http.Middleware.{CorsConfig, cors}
 import zio.http.Header.{AccessControlAllowOrigin, Origin}
-import zio.schema.codec.JsonCodec.zioJsonBinaryCodec
-// import zio.schema.codec.JsonCodec.schemaBasedBinaryCodec                                                                                                                              
-// import zio.schema.codec.JsonCodec.zioJsonBinaryCodec                                                                                                                                  
-import os.*
-import zio.stream.ZStream
 object MainApp extends ZIOAppDefault :
 
   
@@ -30,7 +25,7 @@ object MainApp extends ZIOAppDefault :
 
   val routes =
     Routes(
-      Method.GET / Root -> handler(Response.text("!!! " +
+      Method.GET / Root -> handler(Response.text("hey!!! " +
         "http://localhost:8080/assets/static/sse-test.html")),
       Method.GET / "greet" -> handler { (req: Request) =>
         val name = req.queryParamToOrElse("name", "World")
@@ -53,33 +48,19 @@ object MainApp extends ZIOAppDefault :
       Method.GET / "download" / string("file") -> handler { (file: String, req: Request) => Response.text( s"downloading $file!!!")} , 
 
 
-
-      // private val downloadEndpoint: Endpoint[String, ApiProblem, ZStream[Any, Throwable, Byte], None] = Endpoint
-      // .get("download" / string("file"))
-      // .outStream[Byte](Status.Ok)
-      // .outError[ApiProblem](Status.InternalServerError)
-
             
     
     )  @@ cors(config) //cors configuration. 
 
-    //TODO FINISHIN CONNECTING HANDLER TO ENDPOINT
-    // val downloadHandler: String => ZIO[FileService, ApiProblem, ZStream[Any, Throwable, Byte]] =
-    // (fileName: String) => 
-    //   for {
-    //     file <- FileService.getFile(fileName)
-    //   } yield ZStream.fromFile(file).orDie
-
-    // val route: Routes[FileService, ApiProblem, None] = downloadEndpoint.implement(downloadHandler)
-
 
   
   /**
-    * eg. http://localhost:8080/assets/static/sse-test.html
+    * eg. http://localhost:8083/assets/static/sse-test.html
     */
   val staticroutes =  Routes.empty @@ Middleware.serveResources(zio.http.Path.empty / "assets") //accesses resources within directories and subdirectories
+
   override val run = {
     Console.printLine("please visit http://localhost:8083")  
-    Server.serve(routes++staticroutes).provide(Server.defaultWithPort(8083))
+    Server.serve(staticroutes++routes).provide(Server.defaultWithPort(8083))
 }
 

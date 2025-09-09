@@ -3,13 +3,13 @@ import sbt._
 
 object Dependencies {
   val zioVersion = "2.1.1"
-  val zioJsonVersion = "0.6.2"
-  val zioHttpVersion = "3.0.0-RC8"
+  val zioJsonVersion = "0.7.42"
+  val zioHttpVersion = "3.3.3"
   val nlites_dataimportcsv3sVersion = "0.0.1-SNAPSHOT"
   val frontrouteVersion = "0.19.0"
   val toolkitVersion = "0.7.0"
 
-  val zioHttp     = "dev.zio" %% "zio-http"     % zioHttpVersion
+  val zioHttp     = "dev.zio" %% "zio-http"     %  zioHttpVersion
   val zioTest     = "dev.zio" %% "zio-test"     % zioVersion % Test
   val zioTestSBT = "dev.zio" %% "zio-test-sbt" % zioVersion % Test
   
@@ -42,7 +42,7 @@ object Dependencies {
       nlites_dataimportcsv3s,
       "io.frontroute" %%% "frontroute" % frontrouteVersion,
       "com.raquo" %%% "laminar" % DependencyVersions.laminar,
-      "dev.zio"                       %%% "zio-json"          % "0.4.2",
+      "dev.zio"                       %%% "zio-json"          % zioJsonVersion
 
     )
   }

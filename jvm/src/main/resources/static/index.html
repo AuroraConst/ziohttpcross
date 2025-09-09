@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server-Sent Events Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .event-box { 
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin: 10px 0; 
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        .timestamp { color: #666; font-size: 0.9em; }
+        button { 
+            padding: 10px 20px; 
+            margin: 5px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer;
+        }
+        .start { background: #4CAF50; color: white; }
+        .stop { background: #f44336; color: white; }
+        .clear { background: #008CBA; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Server-Sent Events Demo</h1>
+    
+    <div>
+        <button class="start" onclick="startEvents()">Start General Events</button>
+        <button class="start" onclick="startTimeEvents()">Start Time Events</button>
+        <button class="stop" onclick="stopEvents()">Stop Events</button>
+        <button class="clear" onclick="clearEvents()">Clear Events</button>
+    </div>
+    
+    <div>
+        <h3>Connection Status: <span id="status">Disconnected</span></h3>
+        <h3>Events Received:</h3>
+        <div id="events"></div>
+    </div>
+
+    <script>
+        let eventSource = null;
+
+        function startEvents() {
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            eventSource = new EventSource('/events');
+            updateStatus('Connecting...');
+
+            eventSource.onopen = function(event) {
+                updateStatus('Connected to /events');
+                addEvent('Connection opened', 'System');
+            };
+
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                addEvent(data.message || JSON.stringify(data), data.timestamp || new Date().toISOString());
+            };
+
+            eventSource.onerror = function(event) {
+                updateStatus('Connection error');
+                addEvent('Connection error occurred', new Date().toISOString());
+            };
+        }
+
+        function startTimeEvents() {
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            eventSource = new EventSource('/time-events');
+            updateStatus('Connecting...');
+
+            eventSource.onopen = function(event) {
+                updateStatus('Connected to /time-events');
+                addEvent('Time events connection opened', 'System');
+            };
+
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                addEvent(`Server time: ${data.time}`, new Date().toISOString());
+            };
+
+            eventSource.onerror = function(event) {
+                updateStatus('Connection error');
+                addEvent('Connection error occurred', new Date().toISOString());
+            };
+        }
+
+        function stopEvents() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+                updateStatus('Disconnected');
+                addEvent('Connection closed by user', new Date().toISOString());
+            }
+        }
+
+        function clearEvents() {
+            document.getElementById('events').innerHTML = '';
+        }
+
+        function updateStatus(status) {
+            document.getElementById('status').textContent = status;
+        }
+
+        function addEvent(message, timestamp) {
+            const eventsDiv = document.getElementById('events');
+            const eventDiv = document.createElement('div');
+            eventDiv.className = 'event-box';
+            eventDiv.innerHTML = `
+                <div><strong>${message}</strong></div>
+                <div class="timestamp">${timestamp}</div>
+            `;
+            eventsDiv.insertBefore(eventDiv, eventsDiv.firstChild);
+            
+            // Keep only last 20 events
+            while (eventsDiv.children.length > 20) {
+                eventsDiv.removeChild(eventsDiv.lastChild);
+            }
+        }
+
+        // Auto-cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (eventSource) {
+                eventSource.close();
+            }
+        });
+    </script>
+</body>
+</html>
